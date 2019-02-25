@@ -2,9 +2,9 @@
 speed <- 0.1
 birds <- new_flock(1000)
 
-birds$x <- rnorm(nrom(birds))
-birds$y <- rnorm(nrom(birds))
-birds$z <- rnorm(nrom(birds))
+birds$x <- rnorm(nrow(birds))
+birds$y <- rnorm(nrow(birds))
+birds$z <- rnorm(nrow(birds))
 
 target_pos(attr(birds,"ticks"))
 
