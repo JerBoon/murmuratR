@@ -1,4 +1,4 @@
-no.neighbours = 5
+no.neighbours = 10
 
 
 find_neighbours <- function(birds,b) {
@@ -25,7 +25,7 @@ iterate <- function(birds) {
       dy.n <- sum(birds[n,"dy"])
       dz.n <- sum(birds[n,"dz"])
       #  print(dx.n)
-      birds2[i,c("dx","dy","dz")] <- unit_vector(c(dx.n,dy.n,dz.n)) * speed
+      birds2[i,c("dx","dy","dz")] <- unit_vector(c(dx.n,dy.n,dz.n)) * speed * (runif(1)/20+1)
     }
   }
 
