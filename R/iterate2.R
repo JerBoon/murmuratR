@@ -2,10 +2,14 @@ influence.radius <- 1
 view.angle <- 135
 
 # Find #s of any birds within the sphere of influence of bird b
-find_influencers <- function(birds,b) {
+find_influencers <- function(birds, b) {
+  
+  x1 <- birds[b,"x"]
+  y1 <- birds[b,"y"]
+  z1 <- birds[b,"z"]
   
   #distance^2 to other birds
-  d2 <- (birds$x - birds[b,"x"])^2 + (birds$y - birds[b,"y"])^2 + (birds$z - birds[b,"z"])^2
+  d2 <- (birds$x - x1)^2 + (birds$y - y1)^2 + (birds$z - z1)^2
 
   #those without sphere of influence^2
   inf <- which(d2 < influence.radius^2)
@@ -13,16 +17,16 @@ find_influencers <- function(birds,b) {
 
   #none found?
   if(length(inf) == 0)
-    return(NA)
+    return(NULL)
 
   #fetch data for those, and calculate some other stuff
   inf.data <- birds[inf,]
-  inf.data$dist <- sqrt((inf.data$x - birds[b,"x"])^2 +
-                        (inf.data$y - birds[b,"y"])^2 +
-                        (inf.data$z - birds[b,"z"])^2 )
-  inf.data$dirx <- inf.data$x - birds[b,"x"]
-  inf.data$diry <- inf.data$y - birds[b,"y"]
-  inf.data$dirz <- inf.data$z - birds[b,"z"]
+  inf.data$dist <- sqrt((inf.data$x - x1)^2 +
+                        (inf.data$y - y1)^2 +
+                        (inf.data$z - z1)^2 )
+  inf.data$dirx <- inf.data$x - x1
+  inf.data$diry <- inf.data$y - y1
+  inf.data$dirz <- inf.data$z - z1
   uv <- unit_vector(birds[b,c("dx","dy","dz")])
   
   for (i in 1:nrow(inf.data)) {
@@ -34,10 +38,12 @@ find_influencers <- function(birds,b) {
 
   #none found?
   if(nrow(inf.data) == 0)
-    return(NA)
+    return(NULL)
   
   return(inf.data)
 }
+
+#--------------------------------------------
 
 iterate <- function(birds) {
   
@@ -52,12 +58,14 @@ iterate <- function(birds) {
       birds2[i,c("dx","dy","dz")] <- (unit_vector(target_pos(0)) - birds[i,c("dx","dy","dz")]) * speed
     } else {      
       n <- find_influencers(birds,i)
-      dx.n <- sum(birds[n,"dx"])
-      dy.n <- sum(birds[n,"dy"])
-      dz.n <- sum(birds[n,"dz"])
-      #  print(dx.n)
-      birds2[i,c("dx","dy","dz")] <- unit_vector(c(dx.n,dy.n,dz.n)) * speed * (runif(1)/20+1)
-      #print(paste("influencesrs:",length(n)))
+      if (!is.null(n)) {
+        #dx.n <- sum(birds[n,"dx"])
+        #dy.n <- sum(birds[n,"dy"])
+        #dz.n <- sum(birds[n,"dz"])
+        #  print(dx.n)
+        #birds2[i,c("dx","dy","dz")] <- unit_vector(c(dx.n,dy.n,dz.n)) * speed * (runif(1)/20+1)
+        #print(paste("influencesrs:",length(n)))
+      }
     }
   }
 
