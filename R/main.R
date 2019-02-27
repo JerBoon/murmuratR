@@ -18,3 +18,8 @@ for (i in 1:20) {
   plot_birds(birds)
 }
 plot_birds(birds)
+
+
+
+system.time(for (i in 1:50) { birds <- iterate(birds )})
+  
