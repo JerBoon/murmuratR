@@ -1,5 +1,6 @@
 influence.radius <- 1
 view.angle <- 135
+max.influencers <- 10
 
 # Find #s of any birds within the sphere of influence of bird b
 find_influencers <- function(birds, b) {
@@ -11,10 +12,11 @@ find_influencers <- function(birds, b) {
   #distance^2 to other birds
   d2 <- (birds$x - x1)^2 + (birds$y - y1)^2 + (birds$z - z1)^2
 
-  #those without sphere of influence^2
+  #those with in sphere of influence^2
   inf <- which(d2 < influence.radius^2)
   inf <- inf[inf != b]
-
+  inf <- inf[inf <= max.influencers+1]
+  
   #none found?
   if(length(inf) == 0)
     return(NULL)
@@ -59,6 +61,7 @@ iterate <- function(birds) {
     } else {      
       n <- find_influencers(birds,i)
       if (!is.null(n)) {
+        print(nrow(n))
         #dx.n <- sum(birds[n,"dx"])
         #dy.n <- sum(birds[n,"dy"])
         #dz.n <- sum(birds[n,"dz"])
