@@ -45,6 +45,7 @@ find_influencers <- function(birds, b) {
   return(inf.data)
 }
 
+find_influencers_cmp <- cmpfun(find_influencers)
 #--------------------------------------------
 
 iterate <- function(birds) {
@@ -61,7 +62,7 @@ iterate <- function(birds) {
     } else {      
       n <- find_influencers(birds,i)
       if (!is.null(n)) {
-        print(nrow(n))
+        #print(nrow(n))
         #dx.n <- sum(birds[n,"dx"])
         #dy.n <- sum(birds[n,"dy"])
         #dz.n <- sum(birds[n,"dz"])
