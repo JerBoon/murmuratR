@@ -3,7 +3,7 @@ view.angle <- 135
 max.influencers <- 10
 
 # Find #s of any birds within the sphere of influence of bird b
-find_influencers2 <- function(birds, b) {
+find_influencers <- function(birds, b) {
   
   x1 <- birds[b,"x"]
   y1 <- birds[b,"y"]
@@ -34,11 +34,12 @@ find_influencers2 <- function(birds, b) {
   #find angle between direction of travel of our bird and the position of each bird
   #then filter out the birds behind
   dir <- unit_vector(birds[b,c("dx","dy","dz")])
-  inf$angle <- 0
-  for (i in 1:nrow(inf)) {
-    inf[i,"angle"] <- sum(dir *
-                          unit_vector(inf[i,c("dirx","diry","dirz")]))
-  }
+#  inf$angle <- 0
+#  for (i in 1:nrow(inf)) {
+#    inf[i,"angle"] <- sum(dir *
+#                          unit_vector(inf[i,c("dirx","diry","dirz")]))
+#  }
+  inf$angle <- (inf$dirx * as.numeric(dir[1]) + inf$diry * as.numeric(dir[2]) + inf$dirz * as.numeric(dir[3])) / inf$dist
   inf$angle <- acos(inf$angle) /2 /pi *360
   inf <- inf[inf$angle <= view.angle,]
 
