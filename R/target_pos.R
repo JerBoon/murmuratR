@@ -7,3 +7,15 @@ target_pos <- function(t) {
 
   return (c(x=x,y=y,z=z))
 }
+
+# test code  --------
+
+
+df <- data.frame(t(target_pos(0)))
+for (i in 1:200) {
+  df <- rbind(df, data.frame(t(target_pos(i*10))) )
+}
+
+plot(df$x,df$y, asp=1)
+plot(df$x,df$z, asp=1)
+plot(df$z,df$y, asp=1)
