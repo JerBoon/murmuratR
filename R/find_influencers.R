@@ -44,7 +44,8 @@ find_influencers <- function(birds, b) {
   inf <- inf[inf$angle <= view.angle,]
 
   #filter out the top n closest only  
-  inf <- inf[order(inf$dist)[1:max.influencers],]
+  if (nrow(inf) > max.influencers)
+    inf <- inf[order(inf$dist)[1:max.influencers],]
 
   
   #none found?
