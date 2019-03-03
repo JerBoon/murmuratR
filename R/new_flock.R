@@ -11,7 +11,7 @@ new_flock <- function(n) {
   
   #Create a new aerial flock, on average 0.2m apart
   #This is denser than they might want to be in flight which makes thngs more interesting at takeof..
-  sep <- 0.2
+  sep <- 0.5
   mult <- (n ^ (1/3)) * sep
   df <- data.frame(x=rnorm(n)*mult + 10 +runif(1)*10,
                    y=rnorm(n)*mult + 10 +runif(1)*10,

@@ -3,11 +3,16 @@ birds <- new_flock(100)
 
 for (i in 1:16) {
   birds <- iterate_flock(birds,10)
-  frame = birds[,c("x","z")]
+  frame = birds[,c("x","y","z")]
   frame$i = i
   if(i==1) { results <- frame } else { results <- rbind(results,frame) }
 }
 ggplot2::ggplot(results, aes(x=x,y=z)) +
+  ggplot2::geom_point(alpha=0.05) +
+  ggplot2::theme_minimal() +
+  ggplot2::facet_wrap(~i) +
+  ggplot2::coord_fixed()
+ggplot2::ggplot(results, aes(x=y,y=z)) +
   ggplot2::geom_point(alpha=0.05) +
   ggplot2::theme_minimal() +
   ggplot2::facet_wrap(~i) +
