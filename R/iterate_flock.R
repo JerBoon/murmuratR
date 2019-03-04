@@ -31,6 +31,7 @@ iterate_flock <- function(flk, n) {
 
     #Calculate the amount of influence the  influencer should have
     inf$inf <- pmax(pmin(100 / (inf$dist^2), 0.8),0.2)
+    inf$inf[order(inf$dist)] <- seq(1, 0.2, length.out=nrow(inf)) ^1.8
   
     #Apply the influence vector versus the current direction vector
     flk$dx <- flk$dx * (1-inf$inf) + inf$xdir * inf$inf
