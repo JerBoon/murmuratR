@@ -8,11 +8,15 @@
 #' @examples
 #'   my_flock <- new_flock(1000)
 new_flock <- function(n) {
-  #Create a new flock, at ground level, on average 0.1m apart
+  
+  #Create a new aerial flock, on average 0.2m apart
   #This is denser than they might want to be in flight which makes thngs more interesting at takeof..
-  df <- data.frame(x=runif(n)*sqrt(n)/10, y=runif(n)*sqrt(n)/10, z=0,
-                   dx=0,dy=0,dz=0,
-                   alpha=F)
+  sep <- 0.5
+  mult <- (n ^ (1/3)) * sep
+  df <- data.frame(x=rnorm(n)*mult + 10 +runif(1)*10,
+                   y=rnorm(n)*mult + 10 +runif(1)*10,
+                   z=rnorm(n)*mult + 10 +runif(1)*10,
+                   dx=0,dy=0,dz=0)
   
   attr(df,"ticks") <- 0L
   return(df)
