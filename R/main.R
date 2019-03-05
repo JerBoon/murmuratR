@@ -45,3 +45,18 @@ for (i in 1:1000) {
   print(d)
   t1 <- t2
 }
+
+# -------------------------------
+
+birds <- new_flock(10000)
+for (i in 1:100) {
+  birds <- iterate_flock(birds,10)
+  
+  gg <- ggplot2::ggplot(birds, ggplot2::aes(x=x,y=z)) +
+    ggplot2::geom_point(alpha=0.1,shape=".") +
+    ggplot2::theme_void() +
+    ggplot2::coord_fixed() +
+    ggplot2::scale_x_continuous(limits=c(-100,150)) +
+    ggplot2::scale_y_continuous(limits=c(-20,60))
+  print(gg)
+}
